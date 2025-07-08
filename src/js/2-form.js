@@ -7,6 +7,16 @@ const STORAGE_KEY = 'feedback-form-state';
 
 const form = document.querySelector('.feedback-form');
 
+// Збережених даних при завантаженні сторінки
+const savedData = localStorage.getItem(STORAGE_KEY);
+if (savedData) {
+  const parsedData = JSON.parse(savedData);
+  formData.email = parsedData.email || '';
+  formData.message = parsedData.message || '';
+  form.elements.email.value = formData.email;
+  form.elements.message.value = formData.message;
+}
+
 // Використовуй метод делегування для відстеження
 
 form.addEventListener('input', event => {
@@ -17,15 +27,6 @@ form.addEventListener('input', event => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
   }
 });
-
-// Збережених даних при завантаженні сторінки
-const savedData = localStorage.getItem(STORAGE_KEY);
-if (savedData) {
-  const parsedData = JSON.parse(savedData);
-  formData.email = parsedData.email || '';
-  formData.message = parsedData.message || '';
-  form.elements.email.value = formData.email;
-}
 
 // Обробка сабміту форми
 form.addEventListener('submit', event => {
